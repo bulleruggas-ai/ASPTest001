@@ -1,0 +1,41 @@
+# ---- .NET ----------------------------------------------------------------
+**/bin/
+**/obj/
+*.user
+*.suo
+*.userprefs
+*.pidb
+*.cache
+*.tmp
+*.log
+*.tlog
+project.lock.json
+project.fragment.lock.json
+artifacts/
+
+# ---- IDEs ----------------------------------------------------------------
+.vs/
+.vscode/
+.idea/
+*.swp
+
+# ---- OS ------------------------------------------------------------------
+.DS_Store
+Thumbs.db
+desktop.ini
+
+# ---- Secrets / local config ---------------------------------------------
+# .env is for Docker runtime secrets on the host. Never commit it.
+.env
+.env.local
+.env.*.local
+# Local override files (matches the appsettings.*.local.json convention).
+appsettings.*.local.json
+secrets.json
+
+# ---- Tooling -------------------------------------------------------------
+.claude/
+
+# ---- Publish / Docker build output --------------------------------------
+publish/
+out/
