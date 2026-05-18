@@ -1,0 +1,53 @@
+@page
+@model IndexModel
+@{
+    ViewData["Title"] = "Home";
+}
+
+<section class="hero text-center py-5 mb-4 rounded-3">
+    <h1 class="display-3 fw-bold mb-3">@Model.CompanyName</h1>
+    <p class="lead mb-4">@Model.Tagline</p>
+    <a href="#about" class="btn btn-success btn-lg px-4">Learn more</a>
+</section>
+
+<section id="about" class="row align-items-center mb-5">
+    <div class="col-md-7">
+        <h2>Our mission</h2>
+        <p class="fs-5">@Model.Mission</p>
+    </div>
+    <div class="col-md-5">
+        <ul class="list-group shadow-sm">
+            <li class="list-group-item d-flex justify-content-between">
+                <strong>Founded</strong><span>@Model.FoundedYear</span>
+            </li>
+            <li class="list-group-item d-flex justify-content-between">
+                <strong>Headquarters</strong><span>@Model.Headquarters</span>
+            </li>
+            <li class="list-group-item d-flex justify-content-between">
+                <strong>Team</strong><span>@Model.TeamSize people</span>
+            </li>
+            <li class="list-group-item d-flex justify-content-between">
+                <strong>Contact</strong>
+                <a href="mailto:@Model.ContactEmail">@Model.ContactEmail</a>
+            </li>
+        </ul>
+    </div>
+</section>
+
+<section class="mb-5">
+    <h2 class="text-center mb-4">What we offer</h2>
+    <div class="row g-4">
+        @foreach (var item in Model.Offerings)
+        {
+            <div class="col-md-4">
+                <div class="card h-100 shadow-sm">
+                    <div class="card-body">
+                        <div class="display-5 mb-2">@item.Icon</div>
+                        <h5 class="card-title">@item.Title</h5>
+                        <p class="card-text">@item.Body</p>
+                    </div>
+                </div>
+            </div>
+        }
+    </div>
+</section>

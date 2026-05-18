@@ -1,0 +1,14 @@
+services:
+  web:
+    build: .
+    image: verdant-labs/startup-site:latest
+    container_name: startup-site
+    ports:
+      - "8080:8080"
+    environment:
+      ASPNETCORE_ENVIRONMENT: Production
+      # ASP.NET config uses "__" as the section separator, so these override
+      # the Supabase section in appsettings.json without touching the file.
+      Supabase__Url: ${SUPABASE_URL}
+      Supabase__Key: ${SUPABASE_KEY}
+    restart: unless-stopped
