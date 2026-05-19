@@ -365,7 +365,8 @@ Defined as `@layer components` inside the Tailwind block:
 | `.btn-ghost`      | Translucent secondary capsule                           |
 | `.input-glass`    | iOS-style rounded translucent input with focus ring     |
 | `.label-glass`    | Form label                                              |
-| `.nav-pill`       | Hover-highlighted pill nav item                         |
+| `.nav-pill`       | Hover-highlighted pill nav item (desktop)               |
+| `.nav-pill-mobile`| Full-width block nav item with ≥44px touch target (mobile menu) |
 | `.alert-success`  | Emerald-tinted glass alert                              |
 | `.alert-danger`   | Rose-tinted glass alert                                 |
 
@@ -378,9 +379,20 @@ red background on the invalid input.
 
 ### 8.5 Layout chrome
 
-- Sticky pill-shaped glass navbar centered at the top.
-- Nav items: Home, Objects, Contact, Privacy (hidden on `<sm`), plus a
-  JS-managed `auth-slot` `<li>`.
+- Sticky glass navbar centered at the top. Rounded as a pill on `sm+`,
+  and as a 3xl-rounded card on mobile (to accommodate the expanded
+  hamburger menu below the top row).
+- **Desktop (≥640px):** brand (emoji + "Exxaro Stack Test"), the four
+  page links rendered as `.nav-pill`s, then a vertical divider and the
+  JS-managed `auth-slot`.
+- **Mobile (<640px):** brand collapses to the emoji only on `<420px`
+  (`min-[420px]:inline` for the text). The auth slot stays visible.
+  A hamburger button toggles a vertical menu below the top row,
+  containing the four page links as `.nav-pill-mobile` items (block,
+  ~44px touch targets). The menu auto-closes on link tap and when the
+  viewport crosses the `sm` breakpoint.
+- The toggle wires up `aria-expanded` / `aria-controls` and swaps a
+  three-line / X icon on state change.
 - Footer: small centered text, current year, link to Privacy.
 
 ---

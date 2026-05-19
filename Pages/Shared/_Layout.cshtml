@@ -72,6 +72,9 @@
                 @@apply inline-block rounded-full px-4 py-1.5 text-white/80 hover:text-white hover:bg-white/10 transition-colors;
             }
             .nav-pill-active { @@apply text-white bg-white/15; }
+            .nav-pill-mobile {
+                @@apply block rounded-2xl px-4 py-3 text-base text-white/85 hover:text-white hover:bg-white/10 transition-colors;
+            }
             .btn-primary {
                 @@apply inline-flex items-center justify-center px-6 py-3 rounded-full font-medium text-white
                        bg-gradient-to-br from-ocean-400 to-ocean-600
@@ -146,20 +149,47 @@
         <div class="orb orb-3"></div>
     </div>
 
-    <header class="sticky top-4 z-40 px-4">
-        <nav class="glass mx-auto max-w-6xl flex items-center justify-between px-5 py-3 rounded-full">
-            <a class="font-semibold text-lg tracking-tight flex items-center gap-2" asp-area="" asp-page="/Index">
-                <span class="text-xl">🌿</span>
-                <span>Exxaro Stack Test</span>
-            </a>
-            <ul class="flex items-center gap-1 text-sm">
-                <li><a class="nav-pill" asp-area="" asp-page="/Index">Home</a></li>
-                <li><a class="nav-pill" asp-area="" asp-page="/Objects">Objects</a></li>
-                <li><a class="nav-pill" asp-area="" asp-page="/Query">Contact</a></li>
-                <li class="hidden sm:list-item"><a class="nav-pill" asp-area="" asp-page="/Privacy">Privacy</a></li>
-                <li id="auth-slot" class="ml-2 pl-3 border-l border-white/15 flex items-center gap-2">
-                    <span class="text-white/50 text-xs">&hellip;</span>
-                </li>
+    <header class="sticky top-3 sm:top-4 z-40 px-3 sm:px-4">
+        <nav class="glass mx-auto max-w-6xl px-4 py-3 rounded-3xl sm:rounded-full">
+            <div class="flex items-center justify-between gap-2">
+                <a class="font-semibold tracking-tight flex items-center gap-2 text-base sm:text-lg min-w-0"
+                   asp-area="" asp-page="/Index">
+                    <span class="text-xl shrink-0">🌿</span>
+                    <span class="hidden min-[420px]:inline truncate">Exxaro Stack Test</span>
+                </a>
+
+                <div class="flex items-center gap-2">
+                    <ul class="hidden sm:flex items-center gap-1 text-sm">
+                        <li><a class="nav-pill" asp-area="" asp-page="/Index">Home</a></li>
+                        <li><a class="nav-pill" asp-area="" asp-page="/Objects">Objects</a></li>
+                        <li><a class="nav-pill" asp-area="" asp-page="/Query">Contact</a></li>
+                        <li><a class="nav-pill" asp-area="" asp-page="/Privacy">Privacy</a></li>
+                    </ul>
+
+                    <div id="auth-slot" class="flex items-center gap-2 sm:ml-1 sm:pl-3 sm:border-l sm:border-white/15">
+                        <span class="text-white/50 text-xs">&hellip;</span>
+                    </div>
+
+                    <button type="button" id="nav-toggle"
+                            class="sm:hidden rounded-full p-2 hover:bg-white/10 active:bg-white/15 transition"
+                            aria-label="Toggle menu"
+                            aria-expanded="false"
+                            aria-controls="mobile-nav">
+                        <svg id="nav-toggle-open" class="w-6 h-6" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24" aria-hidden="true">
+                            <path stroke-linecap="round" stroke-linejoin="round" d="M4 6h16M4 12h16M4 18h16" />
+                        </svg>
+                        <svg id="nav-toggle-close" class="w-6 h-6 hidden" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24" aria-hidden="true">
+                            <path stroke-linecap="round" stroke-linejoin="round" d="M6 18L18 6M6 6l12 12" />
+                        </svg>
+                    </button>
+                </div>
+            </div>
+
+            <ul id="mobile-nav" class="hidden sm:hidden mt-3 pt-3 border-t border-white/15 space-y-1">
+                <li><a class="nav-pill-mobile" asp-area="" asp-page="/Index">Home</a></li>
+                <li><a class="nav-pill-mobile" asp-area="" asp-page="/Objects">Objects</a></li>
+                <li><a class="nav-pill-mobile" asp-area="" asp-page="/Query">Contact</a></li>
+                <li><a class="nav-pill-mobile" asp-area="" asp-page="/Privacy">Privacy</a></li>
             </ul>
         </nav>
     </header>
@@ -238,6 +268,38 @@
             // Initial render + react to auth state changes.
             supabase.auth.getSession().then(function (res) { render(res.data.session); });
             supabase.auth.onAuthStateChange(function (_event, session) { render(session); });
+        })();
+    </script>
+    <script>
+        // Mobile menu toggle.
+        (function () {
+            const btn = document.getElementById('nav-toggle');
+            const menu = document.getElementById('mobile-nav');
+            const iconOpen = document.getElementById('nav-toggle-open');
+            const iconClose = document.getElementById('nav-toggle-close');
+            if (!btn || !menu) return;
+
+            function setOpen(open) {
+                menu.classList.toggle('hidden', !open);
+                if (iconOpen)  iconOpen.classList.toggle('hidden', open);
+                if (iconClose) iconClose.classList.toggle('hidden', !open);
+                btn.setAttribute('aria-expanded', open ? 'true' : 'false');
+            }
+
+            btn.addEventListener('click', function () {
+                setOpen(btn.getAttribute('aria-expanded') !== 'true');
+            });
+
+            // Close after a link tap so navigation doesn't leave a stale-open menu.
+            menu.querySelectorAll('a').forEach(function (a) {
+                a.addEventListener('click', function () { setOpen(false); });
+            });
+
+            // Close automatically once the viewport crosses the sm breakpoint.
+            const mq = window.matchMedia('(min-width: 640px)');
+            (mq.addEventListener || mq.addListener).call(mq, 'change', function (e) {
+                if (e.matches) setOpen(false);
+            });
         })();
     </script>
     @await RenderSectionAsync("Scripts", required: false)
