@@ -4,7 +4,7 @@ namespace StartupSite.Pages;
 
 public class IndexModel : PageModel
 {
-    public string CompanyName { get; } = "Verdant Labs";
+    public string CompanyName { get; } = "Exxaro Stack Test";
     public string Tagline { get; } = "Smarter, greener cities — one rooftop at a time.";
     public string Mission { get; } =
         "We help building owners turn unused rooftops into productive, sensor-monitored " +
@@ -13,7 +13,7 @@ public class IndexModel : PageModel
     public int FoundedYear { get; } = 2026;
     public string Headquarters { get; } = "Pretoria, South Africa";
     public int TeamSize { get; } = 7;
-    public string ContactEmail { get; } = "hello@verdantlabs.example";
+    public string ContactEmail { get; } = "hello@example.com";
 
     public (string Title, string Body, string Icon)[] Offerings { get; } = new[]
     {

@@ -1,7 +1,7 @@
 services:
   web:
     build: .
-    image: verdant-labs/startup-site:latest
+    image: exxaro/stack-test:latest
     container_name: startup-site
     ports:
       - "8080:8080"
