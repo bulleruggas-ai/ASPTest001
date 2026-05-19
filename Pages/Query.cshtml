@@ -58,4 +58,25 @@
 
 @section Scripts {
     <partial name="_ValidationScriptsPartial" />
+    <script>
+        (function () {
+            async function prefill() {
+                if (!window._supabase) return;
+                const { data: { session } } = await window._supabase.auth.getSession();
+                if (!session || !session.user) return;
+                const u = session.user;
+                const nameEl = document.getElementById('Input_Name');
+                const emailEl = document.getElementById('Input_Email');
+                if (nameEl && !nameEl.value) {
+                    nameEl.value = (u.user_metadata && (u.user_metadata.full_name || u.user_metadata.name)) || '';
+                }
+                if (emailEl && !emailEl.value) {
+                    emailEl.value = u.email || '';
+                }
+            }
+            // Run after the layout's auth init has had a chance to set up the client.
+            window.addEventListener('load', prefill);
+            document.addEventListener('DOMContentLoaded', prefill);
+        })();
+    </script>
 }
