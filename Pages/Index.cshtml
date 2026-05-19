@@ -4,49 +4,60 @@
     ViewData["Title"] = "Home";
 }
 
-<section class="hero text-center py-5 mb-4 rounded-3">
-    <h1 class="display-3 fw-bold mb-3">@Model.CompanyName</h1>
-    <p class="lead mb-4">@Model.Tagline</p>
-    <a href="#about" class="btn btn-success btn-lg px-4">Learn more</a>
+<section class="glass glass-highlight rounded-[2.25rem] px-6 sm:px-12 py-14 sm:py-20 text-center mb-12">
+    <p class="uppercase tracking-[0.25em] text-xs sm:text-sm text-ocean-200 mb-4">Smart cities, growing</p>
+    <h1 class="text-4xl sm:text-6xl font-bold tracking-tight mb-5">
+        @Model.CompanyName
+    </h1>
+    <p class="text-lg sm:text-2xl text-white/85 max-w-2xl mx-auto mb-8">
+        @Model.Tagline
+    </p>
+    <div class="flex flex-wrap items-center justify-center gap-3">
+        <a href="#about" class="btn-primary">Learn more</a>
+        <a asp-page="/Query" class="btn-ghost">Get in touch</a>
+    </div>
 </section>
 
-<section id="about" class="row align-items-center mb-5">
-    <div class="col-md-7">
-        <h2>Our mission</h2>
-        <p class="fs-5">@Model.Mission</p>
+<section id="about" class="grid md:grid-cols-5 gap-8 mb-12">
+    <div class="md:col-span-3">
+        <h2 class="text-3xl font-semibold tracking-tight mb-4">Our mission</h2>
+        <p class="text-lg text-white/85 leading-relaxed">
+            @Model.Mission
+        </p>
     </div>
-    <div class="col-md-5">
-        <ul class="list-group shadow-sm">
-            <li class="list-group-item d-flex justify-content-between">
-                <strong>Founded</strong><span>@Model.FoundedYear</span>
+    <div class="md:col-span-2">
+        <ul class="glass rounded-3xl divide-y divide-white/10 overflow-hidden">
+            <li class="flex justify-between px-5 py-4">
+                <span class="font-medium text-white/70">Founded</span>
+                <span>@Model.FoundedYear</span>
             </li>
-            <li class="list-group-item d-flex justify-content-between">
-                <strong>Headquarters</strong><span>@Model.Headquarters</span>
+            <li class="flex justify-between px-5 py-4">
+                <span class="font-medium text-white/70">Headquarters</span>
+                <span>@Model.Headquarters</span>
             </li>
-            <li class="list-group-item d-flex justify-content-between">
-                <strong>Team</strong><span>@Model.TeamSize people</span>
+            <li class="flex justify-between px-5 py-4">
+                <span class="font-medium text-white/70">Team</span>
+                <span>@Model.TeamSize people</span>
             </li>
-            <li class="list-group-item d-flex justify-content-between">
-                <strong>Contact</strong>
-                <a href="mailto:@Model.ContactEmail">@Model.ContactEmail</a>
+            <li class="flex justify-between px-5 py-4">
+                <span class="font-medium text-white/70">Contact</span>
+                <a href="mailto:@Model.ContactEmail" class="text-ocean-200 hover:text-white underline-offset-4 hover:underline">
+                    @Model.ContactEmail
+                </a>
             </li>
         </ul>
     </div>
 </section>
 
-<section class="mb-5">
-    <h2 class="text-center mb-4">What we offer</h2>
-    <div class="row g-4">
+<section class="mb-4">
+    <h2 class="text-3xl font-semibold tracking-tight text-center mb-8">What we offer</h2>
+    <div class="grid sm:grid-cols-2 lg:grid-cols-3 gap-6">
         @foreach (var item in Model.Offerings)
         {
-            <div class="col-md-4">
-                <div class="card h-100 shadow-sm">
-                    <div class="card-body">
-                        <div class="display-5 mb-2">@item.Icon</div>
-                        <h5 class="card-title">@item.Title</h5>
-                        <p class="card-text">@item.Body</p>
-                    </div>
-                </div>
+            <div class="glass glass-highlight rounded-3xl p-6 hover:-translate-y-1 hover:bg-white/20 transition-all duration-300">
+                <div class="text-5xl mb-3">@item.Icon</div>
+                <h3 class="text-xl font-semibold mb-2">@item.Title</h3>
+                <p class="text-white/80 leading-relaxed">@item.Body</p>
             </div>
         }
     </div>

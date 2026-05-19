@@ -1,36 +1,5 @@
-html {
-  font-size: 14px;
-}
+/* Most styling lives in the Tailwind config + <style type="text/tailwindcss">
+   block inside Pages/Shared/_Layout.cshtml. This file is kept for one-off
+   overrides that don't need Tailwind processing. */
 
-@media (min-width: 768px) {
-  html {
-    font-size: 16px;
-  }
-}
-
-.btn:focus, .btn:active:focus, .btn-link.nav-link:focus, .form-control:focus, .form-check-input:focus {
-  box-shadow: 0 0 0 0.1rem white, 0 0 0 0.25rem #258cfb;
-}
-
-html {
-  position: relative;
-  min-height: 100%;
-}
-
-body {
-  margin-bottom: 60px;
-}
-
-.form-floating > .form-control-plaintext::placeholder, .form-floating > .form-control::placeholder {
-  color: var(--bs-secondary-color);
-  text-align: end;
-}
-
-.form-floating > .form-control-plaintext:focus::placeholder, .form-floating > .form-control:focus::placeholder {
-  text-align: start;
-}
-
-.hero {
-  background: linear-gradient(135deg, #e6f5ea 0%, #c8e6c9 100%);
-  border: 1px solid #b7dfbd;
-}
+html { scroll-behavior: smooth; }
