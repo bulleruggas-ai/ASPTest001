@@ -322,7 +322,7 @@ These steps live outside the repo and are required for sign-in to work:
 ### 8.1 Tailwind setup
 
 Tailwind ships via the Play CDN (`https://cdn.tailwindcss.com`) with an
-inline `tailwind.config` registering the `ocean` palette and Inter font.
+inline `tailwind.config` registering the `forest` palette and Inter font.
 Custom utilities are defined in a `<style type="text/tailwindcss">` block
 inside `_Layout.cshtml`, which the Play CDN processes (`@apply` works).
 
@@ -332,25 +332,25 @@ JIT script. A future switch to `@tailwindcss/cli` is on the roadmap.
 
 ### 8.2 Color palette
 
-`ocean` is the only custom palette. Values:
+`forest` is the only custom palette. Values:
 
 | Step | Hex       |
 |------|-----------|
-| 50   | `#eef6ff` |
-| 100  | `#d9eaff` |
-| 200  | `#b8d6ff` |
-| 300  | `#8bbcff` |
-| 400  | `#5b97ff` |
-| 500  | `#3776ff` |
-| 600  | `#1f57f0` |
-| 700  | `#1a44c5` |
-| 800  | `#19389a` |
-| 900  | `#0e2360` |
-| 950  | `#08153a` |
+| 50   | `#ecfdf5` |
+| 100  | `#d1fae5` |
+| 200  | `#a7f3d0` |
+| 300  | `#6ee7b7` |
+| 400  | `#34d399` |
+| 500  | `#10b981` |
+| 600  | `#059669` |
+| 700  | `#047857` |
+| 800  | `#065f46` |
+| 900  | `#064e3b` |
+| 950  | `#022c22` |
 
-Body background gradient: `bg-gradient-to-br from-[#020617] via-ocean-950 to-ocean-800`.
+Body background gradient: `bg-gradient-to-br from-[#02140a] via-forest-950 to-forest-800`.
 Three floating orbs sit behind everything (`opacity-0.40`, `blur(90px)`,
-colors `#3776ff`, `#1a44c5`, `#5b97ff`).
+colors `#10b981`, `#047857`, `#34d399`).
 
 ### 8.3 Component utilities (iOS Liquid Glass)
 
@@ -361,7 +361,7 @@ Defined as `@layer components` inside the Tailwind block:
 | `.glass`          | Standard frosted surface — `backdrop-blur(28px) saturate(180%)`, soft inner highlight, deep-blue drop shadow |
 | `.glass-strong`   | Higher opacity + heavier blur; used on primary form card |
 | `.glass-highlight`| Adds a top-right radial specular gleam                  |
-| `.btn-primary`    | Capsule gradient button (ocean-400 → ocean-600) with glow |
+| `.btn-primary`    | Capsule gradient button (forest-400 → forest-600) with glow |
 | `.btn-ghost`      | Translucent secondary capsule                           |
 | `.input-glass`    | iOS-style rounded translucent input with focus ring     |
 | `.label-glass`    | Form label                                              |

@@ -10,7 +10,7 @@
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>@pageTitle - Exxaro Stack Test</title>
-    <meta name="theme-color" content="#0e2360" />
+    <meta name="theme-color" content="#064e3b" />
 
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
@@ -25,18 +25,18 @@
                         sans: ['Inter', 'ui-sans-serif', 'system-ui', '-apple-system', 'BlinkMacSystemFont', 'Segoe UI', 'sans-serif']
                     },
                     colors: {
-                        ocean: {
-                            50:  '#eef6ff',
-                            100: '#d9eaff',
-                            200: '#b8d6ff',
-                            300: '#8bbcff',
-                            400: '#5b97ff',
-                            500: '#3776ff',
-                            600: '#1f57f0',
-                            700: '#1a44c5',
-                            800: '#19389a',
-                            900: '#0e2360',
-                            950: '#08153a'
+                        forest: {
+                            50:  '#ecfdf5',
+                            100: '#d1fae5',
+                            200: '#a7f3d0',
+                            300: '#6ee7b7',
+                            400: '#34d399',
+                            500: '#10b981',
+                            600: '#059669',
+                            700: '#047857',
+                            800: '#065f46',
+                            900: '#064e3b',
+                            950: '#022c22'
                         }
                     }
                 }
@@ -51,14 +51,14 @@
                 -webkit-backdrop-filter: blur(28px) saturate(180%);
                 backdrop-filter: blur(28px) saturate(180%);
                 border: 1px solid rgba(255,255,255,0.22);
-                box-shadow: 0 8px 32px rgba(8,21,58,0.35), inset 0 1px 0 rgba(255,255,255,0.35);
+                box-shadow: 0 8px 32px rgba(2,28,16,0.45), inset 0 1px 0 rgba(255,255,255,0.35);
             }
             .glass-strong {
                 background: linear-gradient(135deg, rgba(255,255,255,0.28) 0%, rgba(255,255,255,0.14) 100%);
                 -webkit-backdrop-filter: blur(36px) saturate(200%);
                 backdrop-filter: blur(36px) saturate(200%);
                 border: 1px solid rgba(255,255,255,0.28);
-                box-shadow: 0 12px 40px rgba(8,21,58,0.40), inset 0 1px 0 rgba(255,255,255,0.45);
+                box-shadow: 0 12px 40px rgba(2,28,16,0.50), inset 0 1px 0 rgba(255,255,255,0.45);
             }
             .glass-highlight { @@apply relative overflow-hidden; }
             .glass-highlight::before {
@@ -77,11 +77,11 @@
             }
             .btn-primary {
                 @@apply inline-flex items-center justify-center px-6 py-3 rounded-full font-medium text-white
-                       bg-gradient-to-br from-ocean-400 to-ocean-600
+                       bg-gradient-to-br from-forest-400 to-forest-600
                        border border-white/30
-                       hover:from-ocean-300 hover:to-ocean-500
+                       hover:from-forest-300 hover:to-forest-500
                        active:scale-[0.98] transition;
-                box-shadow: 0 8px 24px rgba(31,87,240,0.45), inset 0 1px 0 rgba(255,255,255,0.4);
+                box-shadow: 0 8px 24px rgba(16,185,129,0.45), inset 0 1px 0 rgba(255,255,255,0.4);
             }
             .btn-ghost {
                 @@apply inline-flex items-center justify-center px-5 py-2.5 rounded-full font-medium
@@ -89,8 +89,8 @@
             }
             .input-glass {
                 @@apply w-full rounded-2xl bg-white/15 border border-white/25 px-4 py-3 text-white placeholder-white/50
-                       focus:outline-none focus:border-ocean-300 focus:bg-white/20
-                       focus:ring-2 focus:ring-ocean-300/40 transition;
+                       focus:outline-none focus:border-forest-300 focus:bg-white/20
+                       focus:ring-2 focus:ring-forest-300/40 transition;
                 -webkit-backdrop-filter: blur(14px);
                 backdrop-filter: blur(14px);
             }
@@ -130,9 +130,9 @@
             opacity: 0.40;
             will-change: transform;
         }
-        .orb-1 { width: 520px; height: 520px; background: #3776ff; top: -120px;  left: -120px; animation: float-1 18s ease-in-out infinite; }
-        .orb-2 { width: 420px; height: 420px; background: #1a44c5; top: 30%;     right: -160px; animation: float-2 22s ease-in-out infinite; }
-        .orb-3 { width: 360px; height: 360px; background: #5b97ff; bottom: -120px; left: 35%;   animation: float-3 26s ease-in-out infinite; }
+        .orb-1 { width: 520px; height: 520px; background: #10b981; top: -120px;  left: -120px; animation: float-1 18s ease-in-out infinite; }
+        .orb-2 { width: 420px; height: 420px; background: #047857; top: 30%;     right: -160px; animation: float-2 22s ease-in-out infinite; }
+        .orb-3 { width: 360px; height: 360px; background: #34d399; bottom: -120px; left: 35%;   animation: float-3 26s ease-in-out infinite; }
         @@keyframes float-1 { 0%,100% { transform: translate(0,0); } 50% { transform: translate(80px,60px); } }
         @@keyframes float-2 { 0%,100% { transform: translate(0,0); } 50% { transform: translate(-60px,40px); } }
         @@keyframes float-3 { 0%,100% { transform: translate(0,0); } 50% { transform: translate(40px,-50px); } }
@@ -141,7 +141,7 @@
 
     <link rel="stylesheet" href="~/css/site.css" asp-append-version="true" />
 </head>
-<body class="min-h-screen font-sans text-white antialiased relative overflow-x-hidden bg-gradient-to-br from-[#020617] via-ocean-950 to-ocean-800">
+<body class="min-h-screen font-sans text-white antialiased relative overflow-x-hidden bg-gradient-to-br from-[#02140a] via-forest-950 to-forest-800">
 
     <div aria-hidden="true" class="pointer-events-none absolute inset-0 -z-10 overflow-hidden">
         <div class="orb orb-1"></div>
