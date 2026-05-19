@@ -1,0 +1,76 @@
+@page
+@model ObjectsModel
+@using System.Text.Json
+@{
+    ViewData["Title"] = "Objects";
+}
+
+@functions {
+    static string FormatValue(JsonElement el) => el.ValueKind switch
+    {
+        JsonValueKind.String => el.GetString() ?? "",
+        JsonValueKind.Number => el.ToString(),
+        JsonValueKind.True   => "true",
+        JsonValueKind.False  => "false",
+        JsonValueKind.Null   => "—",
+        _                    => el.GetRawText()
+    };
+}
+
+<section class="max-w-4xl mx-auto">
+    <div class="text-center mb-8">
+        <h1 class="text-4xl sm:text-5xl font-bold tracking-tight mb-3">Objects</h1>
+        <p class="text-white/70">
+            Fetched live from
+            <a href="https://api.restful-api.dev/objects" target="_blank" rel="noopener"
+               class="text-ocean-200 hover:text-white underline-offset-4 hover:underline">
+                api.restful-api.dev/objects
+            </a>.
+        </p>
+    </div>
+
+    @if (Model.ErrorMessage is not null)
+    {
+        <div class="alert-danger mb-6" role="alert">@Model.ErrorMessage</div>
+    }
+    else if (Model.Objects.Count == 0)
+    {
+        <div class="glass rounded-3xl p-8 text-center text-white/70">
+            No objects returned.
+        </div>
+    }
+    else
+    {
+        <p class="text-white/60 text-sm mb-4">@Model.Objects.Count objects</p>
+        <ul class="grid sm:grid-cols-2 gap-4">
+            @foreach (var obj in Model.Objects)
+            {
+                <li class="glass glass-highlight rounded-3xl p-5 hover:-translate-y-0.5 hover:bg-white/15 transition-all duration-300">
+                    <div class="flex items-start justify-between gap-3 mb-2">
+                        <h3 class="font-semibold text-lg leading-snug">@obj.Name</h3>
+                        <span class="shrink-0 text-xs font-mono text-white/50 bg-white/10 px-2 py-0.5 rounded-full">
+                            #@obj.Id
+                        </span>
+                    </div>
+
+                    @if (obj.Data is { Count: > 0 })
+                    {
+                        <dl class="mt-3 space-y-1 text-sm">
+                            @foreach (var kv in obj.Data)
+                            {
+                                <div class="flex justify-between gap-3">
+                                    <dt class="text-white/55 truncate">@kv.Key</dt>
+                                    <dd class="text-white/90 text-right break-all">@FormatValue(kv.Value)</dd>
+                                </div>
+                            }
+                        </dl>
+                    }
+                    else
+                    {
+                        <p class="mt-2 text-sm text-white/40 italic">No additional data.</p>
+                    }
+                </li>
+            }
+        </ul>
+    }
+</section>

@@ -123,13 +123,13 @@
         .orb {
             position: absolute;
             border-radius: 9999px;
-            filter: blur(80px);
-            opacity: 0.55;
+            filter: blur(90px);
+            opacity: 0.40;
             will-change: transform;
         }
-        .orb-1 { width: 520px; height: 520px; background: #5b97ff; top: -120px;  left: -120px; animation: float-1 18s ease-in-out infinite; }
-        .orb-2 { width: 420px; height: 420px; background: #1f57f0; top: 30%;     right: -160px; animation: float-2 22s ease-in-out infinite; }
-        .orb-3 { width: 360px; height: 360px; background: #8bbcff; bottom: -120px; left: 35%;   animation: float-3 26s ease-in-out infinite; }
+        .orb-1 { width: 520px; height: 520px; background: #3776ff; top: -120px;  left: -120px; animation: float-1 18s ease-in-out infinite; }
+        .orb-2 { width: 420px; height: 420px; background: #1a44c5; top: 30%;     right: -160px; animation: float-2 22s ease-in-out infinite; }
+        .orb-3 { width: 360px; height: 360px; background: #5b97ff; bottom: -120px; left: 35%;   animation: float-3 26s ease-in-out infinite; }
         @@keyframes float-1 { 0%,100% { transform: translate(0,0); } 50% { transform: translate(80px,60px); } }
         @@keyframes float-2 { 0%,100% { transform: translate(0,0); } 50% { transform: translate(-60px,40px); } }
         @@keyframes float-3 { 0%,100% { transform: translate(0,0); } 50% { transform: translate(40px,-50px); } }
@@ -138,7 +138,7 @@
 
     <link rel="stylesheet" href="~/css/site.css" asp-append-version="true" />
 </head>
-<body class="min-h-screen font-sans text-white antialiased relative overflow-x-hidden bg-gradient-to-br from-ocean-950 via-ocean-800 to-ocean-600">
+<body class="min-h-screen font-sans text-white antialiased relative overflow-x-hidden bg-gradient-to-br from-[#020617] via-ocean-950 to-ocean-800">
 
     <div aria-hidden="true" class="pointer-events-none absolute inset-0 -z-10 overflow-hidden">
         <div class="orb orb-1"></div>
@@ -154,6 +154,7 @@
             </a>
             <ul class="flex items-center gap-1 text-sm">
                 <li><a class="nav-pill" asp-area="" asp-page="/Index">Home</a></li>
+                <li><a class="nav-pill" asp-area="" asp-page="/Objects">Objects</a></li>
                 <li><a class="nav-pill" asp-area="" asp-page="/Query">Contact</a></li>
                 <li class="hidden sm:list-item"><a class="nav-pill" asp-area="" asp-page="/Privacy">Privacy</a></li>
                 <li id="auth-slot" class="ml-2 pl-3 border-l border-white/15 flex items-center gap-2">
