@@ -123,6 +123,7 @@ app.Run();
 | `/`          | `IndexModel`         | Hero + mission + offerings                      |
 | `/Objects`   | `ObjectsModel`       | Server-fetch + render the demo REST API         |
 | `/Query`     | `QueryModel`         | Contact form, posts to Supabase via REST        |
+| `/SignIn`    | `SignInModel`        | Provider chooser (Google, Microsoft) for Supabase OAuth |
 | `/Privacy`   | `PrivacyModel`       | Static privacy placeholder                      |
 | `/Error`     | `ErrorModel`         | Default error page                              |
 
@@ -272,7 +273,10 @@ See section 4.2. No local persistence.
 
 ### 7.1 Stack
 
-- Provider: Google OAuth, brokered by Supabase Auth.
+- Providers: **Google** and **Microsoft (Azure / Entra)**, both
+  brokered by Supabase Auth. Each is enabled in the Supabase Dashboard
+  with its own OAuth client (Google Cloud Console / Microsoft Entra),
+  pointing to the Supabase callback URL.
 - Mechanism: `@supabase/supabase-js` v2 in the browser. The Supabase
   client is created in `_Layout.cshtml` from `Config["Supabase:Url"]`
   and `Config["Supabase:Key"]` (both injected via `IConfiguration`),
@@ -285,14 +289,17 @@ See section 4.2. No local persistence.
 1. Layout JS calls `supabase.auth.getSession()` on load.
 2. If a session exists, the `auth-slot` nav element is rendered with the
    user's name + a "Sign out" button.
-3. Otherwise, a "Sign in with Google" button is rendered.
-4. Clicking "Sign in" calls
-   `supabase.auth.signInWithOAuth({ provider: 'google', options: { redirectTo: <current-page> } })`.
-5. Supabase handles the redirect to Google and the callback at
+3. Otherwise, the auth slot renders a "Sign in" pill linking to `/SignIn`.
+4. `/SignIn` shows a glass card with one button per provider. Clicking
+   a button calls
+   `supabase.auth.signInWithOAuth({ provider: 'google' | 'azure', options: { redirectTo: window.location.origin } })`.
+5. If the user is already signed in when they hit `/SignIn`, the page
+   JS immediately redirects them to `/`.
+6. Supabase handles the redirect to the provider and the callback at
    `https://uxpmjqynxeinulkjpifc.supabase.co/auth/v1/callback`.
-6. supabase-js detects the auth callback on return, persists the session
+7. supabase-js detects the auth callback on return, persists the session
    in `localStorage`, and `onAuthStateChange` fires — the nav re-renders.
-7. Sign out calls `supabase.auth.signOut()` then `location.reload()`.
+8. Sign out calls `supabase.auth.signOut()` then `location.reload()`.
 
 ### 7.3 What sign-in does and doesn't do
 
@@ -306,14 +313,26 @@ See section 4.2. No local persistence.
 
 ### 7.4 Provider-side setup
 
-These steps live outside the repo and are required for sign-in to work:
+These steps live outside the repo and are required for sign-in to work.
+Both providers share the same Supabase callback URL
+(`https://uxpmjqynxeinulkjpifc.supabase.co/auth/v1/callback`); only the
+Client ID + Secret you paste into Supabase differs.
 
-1. Google Cloud Console: create OAuth 2.0 Client ID. Authorized redirect
-   URI: `https://uxpmjqynxeinulkjpifc.supabase.co/auth/v1/callback`.
+**Google:**
+1. Google Cloud Console: create OAuth 2.0 Client ID with the Supabase
+   callback URL as the authorized redirect URI.
 2. Supabase Dashboard → Authentication → Providers → Google: paste the
-   Client ID and Client Secret.
-3. Supabase Dashboard → Authentication → URL Configuration: allow
-   `http://localhost:5097` for dev and the production origin once known.
+   Client ID and Client Secret, toggle on.
+
+**Microsoft / Azure:**
+1. Entra admin center: register an app with the Supabase callback URL
+   as a Web redirect URI. Generate a client secret.
+2. Supabase Dashboard → Authentication → Providers → Azure: paste the
+   Client ID and Client Secret, toggle on.
+
+**Shared:**
+- Supabase Dashboard → Authentication → URL Configuration: allow
+  `http://localhost:5097` for dev and the production origin once known.
 
 ---
 
@@ -365,6 +384,7 @@ Defined as `@layer components` inside the Tailwind block:
 | `.btn-ghost`      | Translucent secondary capsule                           |
 | `.input-glass`    | iOS-style rounded translucent input with focus ring     |
 | `.label-glass`    | Form label                                              |
+| `.provider-btn`   | Full-width auth provider button (icon + label) on `/SignIn` |
 | `.nav-pill`       | Hover-highlighted pill nav item (desktop)               |
 | `.nav-pill-mobile`| Full-width block nav item with ≥44px touch target (mobile menu) |
 | `.alert-success`  | Emerald-tinted glass alert                              |
@@ -544,9 +564,11 @@ are handled by the framework.
 - **The publishable Supabase key sits in dev-machine User Secrets and on
   the production server's `.env`.** Rotating it is a Supabase dashboard
   action plus a redeploy.
-- **Microsoft Entra ID is not used** and shouldn't be re-attempted in
-  this project — the user does not have permission to register apps in
-  the Exxaro Entra tenant.
+- **Direct ASP.NET ↔ Entra ID integration is not used.** When the
+  project briefly tried `Microsoft.Identity.Web`, the user couldn't
+  create an app registration in the Exxaro Entra tenant. Microsoft
+  sign-in now flows through Supabase Auth's Azure provider instead,
+  using an app registration the user owns separately.
 
 ### 12.2 Planned, not started
 
